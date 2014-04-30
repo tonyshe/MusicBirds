@@ -19,7 +19,10 @@ The NOTE list is a list of integers 0-11 (inclusive) which correspond to sheet m
 11 corresponds to E4, and increases diatonically to A5. I'll probably add a note-converter function
 later on to make transcribing easier.
 
+===
+
 Currently the script works like this:
+
 -Crop the next frame of the background image from the loopable .png in the folder
 
 -Check to see if an object is created at this frame number
