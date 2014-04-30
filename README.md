@@ -15,17 +15,22 @@ note_data = { FRAME_NUMBER:[NOTE 1, NOTE 2, ...], ...}
 Where the FRAME_NUMBER is the frame number your note(s) occur at. The time-to-frame conversion in 
 the current setup is 24 fps; programs like Audacity will display timing in music files as frames, too.
 
-The NOTE list is a list of integers [0,11] (inclusive) which correspond to sheet music notes.
+The NOTE list is a list of integers 0-11 (inclusive) which correspond to sheet music notes.
 11 corresponds to E4, and increases diatonically to A5. I'll probably add a note-converter function
 later on to make transcribing easier.
 
 Currently the script works like this:
 -Crop the next frame of the background image from the loopable .png in the folder
+
 -Check to see if an object is created at this frame number
+
   -If yes, then create the corresponding object
-  -If the object being created is a bird, refer to wire_data array to also get the vertical coordinate
-   to draw the bird on
+  
+  -If the object being created is a bird, refer to wire_data array to also get the vertical coordinate to draw the bird on
 -Find and draw all instances of existing objects
+
   -Draw in this order: tree, pole, wires, birds
+  
   -Call the object.nextframe() method to move each object to the left for the animation effect
+  
 -Repeat this loop until FRAME == TOTAL FRAMES
