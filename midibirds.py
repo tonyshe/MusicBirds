@@ -2,6 +2,7 @@ from PIL import Image
 import numpy
 import subprocess as sp
 import random
+import os
 
 FFMPEG_BIN = 'ffmpeg.exe'
 command = [ FFMPEG_BIN,
@@ -105,12 +106,12 @@ def wireData(wiredata_im):
 def main():
 	pipe = sp.Popen(command, stdin=sp.PIPE, stderr=None)	#create pipe. set stderr to None because otherwise it would take up too much memory
 	total_frames = 5200
-	bg_im = Image.open('cloud_loop2.png')
-	polename = 'pole1.png'
-	wiresname = 'wires12.png'
+	bg_im = Image.open('image_assets/cloud_loop2.png')
+	polename = 'image_assets/poles_wires/pole1.png'
+	wiresname = 'image_assets/poles_wires/wires12.png'
 	tree_list = [0] *total_frames
-	w_data_12 = wireData(Image.open('wires12_data.png'))
-	w_data_21 = wireData(Image.open('wires21_data.png'))
+	w_data_12 = wireData(Image.open('image_assets/poles_wires/wires12_data.png'))
+	w_data_21 = wireData(Image.open('image_assets/poles_wires/wires21_data.png'))
 	w_data = w_data_21
 
 	#song data goes below. input FRAME NUMBER:[List of wires with birds] as a dict
@@ -149,7 +150,7 @@ def main():
 		current_frame = bg_draw(bg_im,i,100,pipe)
 		if tree_list[i] == 1:
 			#create a tree 
-			tree_file = 'treen' + str(treecount%7) + '.png'
+			tree_file = 'image_assets/trees/treen' + str(treecount%7) + '.png'
 			treecount += 1
 			tree_im = Image.open(tree_file)
 			tree = BgTree(tree_im)
@@ -157,13 +158,13 @@ def main():
 		if i == 0 or (i % 250 == 0):
 			pole_im = Image.open(polename)
 			wires_im = Image.open(wiresname)
-			if polename == 'pole1.png':
-				polename = 'pole2.png'
-				wiresname = 'wires21.png'
+			if polename == 'image_assets/poles_wires/pole1.png':
+				polename = 'image_assets/poles_wires/pole2.png'
+				wiresname = 'image_assets/poles_wires/wires21.png'
 				w_data = w_data_12
 			else:
-				polename = 'pole1.png'
-				wiresname = 'wires12.png'
+				polename = 'image_assets/poles_wires/pole1.png'
+				wiresname = 'image_assets/poles_wires/wires12.png'
 				w_data = w_data_21
 			pole = TelephonePole(pole_im)
 			wire = Wires(wires_im)
@@ -172,11 +173,11 @@ def main():
 		if note_data.get(i,0):
 			for note in note_data.get(i,0):
 				if note % 2 == 0:
-					bird_im = Image.open('birdf_' + str(birdcount_f%5) +'.png')
+					bird_im = Image.open('image_assets/birds/birdf_' + str(birdcount_f%5) +'.png')
 					bird = BirdsObj(bird_im,w_data[(i%250)*10][int(note/2)]-100)
 					birdcount_f += 1
 				else:
-					bird_im = Image.open('birde_' + str(birdcount_e%5) +'.png')
+					bird_im = Image.open('image_assets/birds/birde_' + str(birdcount_e%5) +'.png')
 					bird = BirdsObj(bird_im,w_data[(i%250)*10][int(note/2)]-100)
 					birdcount_e += 1
 
