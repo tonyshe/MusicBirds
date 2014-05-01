@@ -1,6 +1,7 @@
 MusicBirds
 ==========
 Current version: 0.1
+Kinda messy right now, but I'm working on consolidating a bunch of variables/objects
 
 Python script that visualizes music as birds on a telephone wire.
 
