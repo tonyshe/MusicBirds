@@ -2,8 +2,9 @@ from PIL import Image
 import numpy
 import subprocess as sp
 import random
-import os
 
+#ffmpeg command line information. If you change the resolution, make sure that's also reflected it the output
+#jpeg image made by PIL
 FFMPEG_BIN = 'ffmpeg.exe'
 command = [ FFMPEG_BIN,
         '-y', # (optional) overwrite output file if it exists
@@ -16,9 +17,10 @@ command = [ FFMPEG_BIN,
         '-an', # Tells FFMPEG not to expect any audio
         '-vcodec', 'mpeg4',
         '-b', '2000k', # bitrate
-        'my_output_videofile.mp4' ]
+        'musicbirds_output' ]
 
 def bg_draw(bg_im,frame,speed,pipe):
+	#draws the background
 	bg_width,bg_height = bg_im.size
 	out_im = Image.new(mode ='RGB',size=(1280,720),color = 0)
 	bg_offset = -(int(frame*bg_width/(24*speed)) % bg_width)
@@ -77,6 +79,8 @@ class Wires(object):
 			del self
 
 def wireData(wiredata_im):
+	#extracts positioning data to place birds at the right height, depending on the frame.
+	#very quick and dirty. refer to the wire data .png files
 	wire_array = numpy.asarray(wiredata_im)
 	height,width,__ = wire_array.shape
 	output_data = numpy.zeros([width+1,6])
@@ -180,7 +184,7 @@ def main():
 					bird_im = Image.open('image_assets/birds/birde_' + str(birdcount_e%5) +'.png')
 					bird = BirdsObj(bird_im,w_data[(i%250)*10][int(note/2)]-100)
 					birdcount_e += 1
-
+		#order is important for drawing the images, because foreground objects will obscure background objs
 		for treeobj in BgTree.trees:
 			#draw all trees and propagate them to their next frames
 			current_frame.paste(treeobj.tree_im,(treeobj.coordinates,100),treeobj.tree_im)
