@@ -5,6 +5,8 @@ Kinda messy right now, but I'm working on consolidating a bunch of variables/obj
 
 Python script that visualizes music as birds on a telephone wire.
 
+VIEW EXAMPLE VIDEO HERE: https://www.youtube.com/watch?v=JU8gmiNLgnM
+
 This script requires image assets, so make sure those are included in the same folder as the .py file.
 In addition, MusicBirds creates video via stdin jpeg pipe into FFMPEG.exe, so make sure that is also in
 the directory.
